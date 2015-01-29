@@ -49,7 +49,8 @@ class Nori
       def self.parse(xml, options)
         document = Document.new
         document.options = options
-        parser = ::Nokogiri::XML::SAX::Parser.new document
+        encoding = options.delete(:encoding) || 'UTF-8'
+        parser = ::Nokogiri::XML::SAX::Parser.new document, encoding
         parser.parse xml
         document.stack.length > 0 ? document.stack.pop.to_hash : {}
       end
